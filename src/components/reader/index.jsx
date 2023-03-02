@@ -18,6 +18,7 @@ import * as Speech from "expo-speech";
 import { song as script } from "../../../mockup/text";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import Ballon from "../ballon";
 export default function Reader({
   timer,
   script,
@@ -30,6 +31,10 @@ export default function Reader({
   isSearch,
   selectedWord,
   setSelectedWord,
+  currentAudio,
+  isInFavorite,
+  StoredFavoriteLists,
+  setIsPLaying = { setIsPLaying },
 }) {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [soundProps, setSoundProps] = React.useState({});
@@ -37,16 +42,21 @@ export default function Reader({
   const [arrayofWord, setArrayofwords] = React.useState([]);
 
   async function handleSearch(text, props) {
-    setSelectedWord(text);
-    await sound.setPositionAsync(props.time.from);
     if (isPlaying) {
-      playPause();
+      await sound.pauseAsync();
     }
-    
+
+    setIsPLaying(false);
+    setSelectedWord(text);
+  }
+
+  function shutBallonDown() {
+    setSelectedWord(null);
   }
 
   function isSelected1(time, data) {
     let select = false;
+    
     if (time >= data.time.from && time <= data.time.to) {
       return (select = true);
     }
@@ -58,12 +68,13 @@ export default function Reader({
     if (!isActive) {
       return {
         boxStyles: {
-          marginTop: 5,
+          marginTop: 10,
         },
         textStyles: {
           fontSize: fontSize,
-          color: "#ffffffa6",
+          color:colorSchema.dark?"#fff": "rgb(0, 45, 90)",
           fontWeight: "400",
+          fontFamily: "custom",
         },
       };
     }
@@ -71,10 +82,9 @@ export default function Reader({
     if (isSelected1(time, data)) {
       return {
         boxStyles: {
-          // backgroundColor: "#0074e8",
+          backgroundColor: "#f8b133",
 
-          marginTop: 5,
-          borderRadius: 8,
+          marginTop: 10,
         },
         textStyles: {
           //color: "#0074e8",
@@ -82,17 +92,19 @@ export default function Reader({
           fontSize: fontSize + 3,
           fontWeight: "700",
           color: "#ffffffc9",
+          fontFamily: "custom",
         },
       };
     }
     return {
       boxStyles: {
-        marginTop: 5,
+        marginTop: 10,
       },
       textStyles: {
         fontSize: fontSize,
-        color: "#ffffffa6",
+        color: colorSchema.dark?"#fff": "rgb(0, 45, 90)",
         fontWeight: "500",
+        fontFamily: "custom",
       },
     };
   }
@@ -117,6 +129,11 @@ export default function Reader({
               styling={setStyleBoxState}
               active={true}
               select={isSelected1(timer, text)}
+              selectedWord={selectedWord}
+              currentAudio={currentAudio}
+              isInFavorite={isInFavorite}
+              StoredFavoriteLists={StoredFavoriteLists}
+              shutBallonDown={shutBallonDown}
             />
           );
         })}
@@ -136,10 +153,45 @@ function TextingComponent({
   styling,
   active,
   select,
+  selectedWord,
+  currentAudio,
+  isInFavorite,
+  StoredFavoriteLists,
+  shutBallonDown,
 }) {
+  const [teste, setTest] = React.useState();
+  const baloonRef = React.useRef();
+  const [ballonD, setBallonD] = React.useState(40);
+
+  const [position, setPosition] = React.useState();
+  const [move, setMove] = React.useState(false);
+
+  const handleOnLayout = (event) => {
+    const { x, y } = event.nativeEvent.layout;
+    console.log(` ${x}`);
+    setPosition({ x, y });
+  };
+
+  const setOpacityTo = React.useCallback((value) => {
+    baloonRef.current.setNativeProps({
+      opacity: value,
+    });
+  }, []);
+
+  React.useEffect(() => {
+    if (baloonRef && baloonRef.current) {
+      setOpacityTo(1);
+    }
+  }, [teste]);
+
+  const screenWidth = width;
   function showUpTarget(time, data) {
+    if (data.time.from == 0 && data.time.to == 0) {
+      return false;
+    }
+
     let select = false;
-    let extra = 5000;
+    let extra = 4000;
     if (time >= data.time.from - extra + 1000 && time <= data.time.to + extra) {
       return (select = true);
     }
@@ -147,20 +199,63 @@ function TextingComponent({
     return select;
   }
 
+  const handleOnPress = () => {
+    if (!move) {
+      return;
+    }
+    setMove(false);
+    baloonRef.current.measure((x, y, width, height, pageX, pageY) => {
+      setPosition({ x, y, width, height, pageX, pageY });
+      const difference = width + pageX - screenWidth;
+      if (screenWidth < width + pageX)
+        return setBallonD((prev) => prev + difference);
+      if (pageX < 0) return setBallonD((prev) => prev + pageX);
+    });
+  };
+
   if (showUpTarget(timer, text))
     return (
       <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
         {text?.text.split(" ").map((txt, index) => {
           return (
-            <TouchableOpacity
-              key={index}
-              style={styling(timer, text, active, index).boxStyles}
-              onPress={() => handlSearch(txt, text)}
-            >
-              <Text style={styling(timer, text, active, index).textStyles}>
-                {txt}{" "}
-              </Text>
-            </TouchableOpacity>
+            <View key={index}>
+              {selectedWord && selectedWord == txt && teste == index && (
+                <View
+                  ref={baloonRef}
+                  onLayout={handleOnPress}
+                  style={{
+                    position: "absolute",
+                    top: -100,
+                    alignContent: "flex-start",
+                    left: -ballonD,
+                  }}
+                >
+                  <Ballon
+                    word={txt}
+                    squarePosition={"50%"}
+                    data={currentAudio}
+                    isInFavorite={isInFavorite}
+                    StoredFavoriteLists={StoredFavoriteLists}
+                    shutdown={shutBallonDown}
+                  />
+                </View>
+              )}
+
+              <TouchableOpacity
+                style={styling(timer, text, active, index).boxStyles}
+                onPress={async () => {
+                  setBallonD(40);
+                  await handlSearch(txt, text);
+                  setTest(index);
+                  setMove(true);
+                  // handleOnPress()
+                }}
+              >
+                <Text style={styling(timer, text, active, index).textStyles}>
+                  {txt}{" "}
+                </Text>
+              </TouchableOpacity>
+            </View>
           );
         })}
       </View>
@@ -197,3 +292,26 @@ const styles = StyleSheet.create({
     fontSize: 31,
   },
 });
+/*
+
+
+  
+      console.log("position:" + pageX);
+
+      if (position > screenWidth) {
+
+        const difference = position - screenWidth;
+        setBallonD((prev)=>  prev  + difference)
+        return;
+      }
+      if (pageX < 0) {
+        console.log("menor que 0 ");
+
+        setBallonD((prev)=>   -90)
+
+
+        return;
+      }
+
+       setBallonD(60)
+       */

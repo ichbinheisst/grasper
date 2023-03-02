@@ -13,6 +13,7 @@ import {
 import { song } from "../../../../mockup/album/track/song";
 import ModalTip from "../components/modalHelp";
 import { Globalaudio } from "../../context";
+import colorSchema from "../../../../colorSchemma/color";
 export default function FillouTheGaps({ navigation }) {
   const dark = true;
   const {
@@ -140,7 +141,7 @@ export default function FillouTheGaps({ navigation }) {
 
   return (
     <ActivityTemplate
-      isDark={dark}
+      isDark={colorSchema.dark}
       check={Correct}
       page={page}
       total={activities.length}

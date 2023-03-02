@@ -12,20 +12,36 @@ import { AntDesign } from "@expo/vector-icons";
 import CardAlbum from "../cards/albumCard";
 
 export default function Swipper({ colorSchema, data, action, dark }) {
+  const styles = StyleSheet.create({
+    container: {
+      height: 260,
+
+      justifyContent: "center",
+      alignContent: "center",
+
+      alignItems: "center",
+      marginVertical: 10,
+    },
+    flatlist: {
+      height: "80%",
+
+      alignContent: "center",
+      justifyContent: "center",
+      alignSelf: "center",
+    },
+    fontTitle: {
+      color: colorSchema.fonts.h2,
+      alignSelf: "flex-start",
+      padding: 10,
+      marginLeft: 5,
+      fontSize: 24,
+      fontWeight: "900",
+    },
+  });
+
   return (
     <View style={styles.container}>
-      <Text
-        style={{
-          color: "#fff",
-          alignSelf: "flex-start",
-          padding: 10,
-          marginLeft: 5,
-          fontSize: 20,
-          fontWeight: "600",
-        }}
-      >
-        Albuns
-      </Text>
+      <Text style={styles.fontTitle}>Albuns</Text>
       <FlatList
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.flatlist}
@@ -46,22 +62,3 @@ export default function Swipper({ colorSchema, data, action, dark }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    height: 250,
-
-    justifyContent: "center",
-    alignContent: "center",
-
-    alignItems: "center",
-    marginVertical: 20,
-  },
-  flatlist: {
-    height: "80%",
-
-    alignContent: "center",
-    justifyContent: "center",
-    alignSelf: "center",
-  },
-});

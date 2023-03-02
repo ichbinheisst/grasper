@@ -24,8 +24,9 @@ export default function OptionBox({ options, action }) {
       borderRadius: 100,
       borderWidth: 1,
       height: 40,
+
       // width: 80,
-      borderColor: "#A200E8",
+
       alignContent: "center",
       alignItems: "center",
       justifyContent: "center",
@@ -45,10 +46,15 @@ export default function OptionBox({ options, action }) {
             key={index}
             style={{
               ...styles.OptionBox,
-              borderColor: el.select ? "#A200E8" : "#c6c6c6",
+              borderColor: el.select ? "#f8b133" : "#c6c6c6",
+              backgroundColor: el?.select ? "#f8b133" : "#ffff",
             }}
           >
-            <Text style={styles.fontStyle}>{el.language}</Text>
+            <Text
+              style={{ ...styles.fontStyle, color: el.select ? "#fff" : "rgb(50, 60, 69)" }}
+            >
+              {el.language}
+            </Text>
           </Pressable>
         );
       })}

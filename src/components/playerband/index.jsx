@@ -27,10 +27,10 @@ export default function BandPlayer({
   nav,
   playPause,
   state,
-  setState,
   data,
   close,
-  colorSchema,
+
+  color,
 }) {
   const [isPlaying, setIsPlaying] = React.useState(state);
   const rotation = useSharedValue(0);
@@ -51,58 +51,61 @@ export default function BandPlayer({
     rotation.value = withDelay(200, withTiming(0, { duration: 200 }));
   }
   React.useEffect(() => {
-    opacity.value = withTiming(0.8, { duration: 1000 });
+    opacity.value = withTiming(1, { duration: 1000 });
   }, []);
 
   const styles = StyleSheet.create({
     container: {
-      //height: 80,
-      maxHeight: 60,
-      width: "98%",
+      height: 65,
+      maxHeight: 67,
+      width: "96%",
       flexDirection: "row",
-      backgroundColor: colorSchema.colorFullPallet.mainColor,
+      backgroundColor: color.triade.primary,
       justifyContent: "space-around",
-      borderRadius: 10,
-      padding: 5,
+      borderRadius: 8,
+
+      padding: 0,
+
       alignItems: "center",
 
       shadowOffset: {
         width: 5,
         height: 5,
       },
-      shadowColor: colorSchema.main,
-      shadowOpacity: 0.5,
-      shadowRadius: 5,
-      elevation: 6,
+      shadowColor: color.triade.primary,
+      shadowOpacity: 0.2,
+      shadowRadius: 1,
+      elevation: 3,
       opacity: 0.1,
     },
     infoBox: {
       height: "80%",
-      width: "70%",
+      width: "60%",
       flexDirection: "row",
       justifyContent: "space-evenly",
       alignItems: "center",
     },
 
     avatar: {
-      height: 43,
-      width: 43,
-      borderRadius: 50,
+      height: 50,
+      width: 50,
+      borderRadius: 10,
     },
 
     avatarInfo: {
       width: "60%",
+      overflow: "hidden",
     },
 
     h2: {
-      fontSize: 12,
+      fontSize: 15,
       fontWeight: "800",
-      color: colorSchema.fontH3,
+      color: color.fonts.white,
     },
     h4: {
       fontSize: 10,
       fontWeight: "800",
-      color: colorSchema.fontH3,
+      color: color.fonts.white,
     },
 
     playerBox: {
@@ -135,14 +138,14 @@ export default function BandPlayer({
           >
             <AntDesign
               name={!state ? "caretright" : "pause"}
-              size={25}
-              color="#fff"
+              size={28}
+              color={color.icons.super_light}
             />
           </Pressable>
         </Animated.View>
 
         <TouchableOpacity onPress={close} style={{ padding: 5 }}>
-          <AntDesign name={"close"} size={25} color="#fff" />
+          <AntDesign name={"close"} size={25} color={color.icons.super_light} />
         </TouchableOpacity>
       </View>
     </Animated.View>

@@ -17,6 +17,7 @@ import {
   stopAudio,
   StopPlay,
 } from "./unscrambleController";
+import colorSchema from "../../../../colorSchemma/color";
 const dark = true;
 export default function UnscrambleScreen({ navigation }) {
   const {
@@ -110,7 +111,7 @@ export default function UnscrambleScreen({ navigation }) {
     },
     title: {
       fontSize: 20,
-      color: dark ? "#fff" : "#000",
+      color: colorSchema.dark ? "#fff" : "#000",
     },
     playerBox: {
       width: 70,
@@ -146,7 +147,7 @@ export default function UnscrambleScreen({ navigation }) {
       showFeedBack={feedBack}
       statusFeedback={animationsStatus}
       showSubmitButton={true}
-      isDark={true}
+      isDark={colorSchema.dark}
       backgroundImage={currentAudio.thumbnail}
     >
       <Text style={styles.title}>Listen and order the sentences:</Text>
@@ -155,7 +156,7 @@ export default function UnscrambleScreen({ navigation }) {
           <SimplePlayer
             action={Player}
             isAnimate={isPlaying}
-            isDark={dark}
+            isDark={colorSchema.dark}
             showSlow={true}
             slowState={slowState}
             slowdown={slowDown}
@@ -169,8 +170,8 @@ export default function UnscrambleScreen({ navigation }) {
                 key={index * Math.random() * 100}
                 content={wrd}
                 action={unsScrambleSetence}
-                fontColor={!dark ? "#0c0c0c7c" : "#fff"}
-                boxColor={!dark ? "#ffff" : "purple"}
+                fontColor={ "#fff"}
+                boxColor={"rgb(0, 165, 255)"}
               />
             );
           })}

@@ -47,7 +47,7 @@ export default function ProgressBar({
     <View style={styles.container}>
       {showIcon && (
         <View style={styles.statusBox}>
-          <AntDesign name="heart" size={20} color="#e60023" />
+          <AntDesign name="heart" size={20} color="red" />
           <Text style={{ color:isDark ?"#fff":"#000" }}>
             {" "}
             {total}/{concluded}

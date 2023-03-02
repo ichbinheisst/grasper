@@ -19,6 +19,7 @@ export default function TrackCard({
   state,
   trackPlayingInfo,
   action2,
+  dark
 }) {
   function checkPlaying() {
     if (state && trackPlayingInfo.id == data.id) {
@@ -35,7 +36,7 @@ export default function TrackCard({
       justifyContent: "space-between",
       padding: 10,
       alignItems: "center",
-      borderBottomWidth: 0.3,
+      //borderBottomWidth: 0.3,
       borderColor: colorSchema.colorFullPallet.mainColor,
       marginTop: 5,
     },
@@ -51,7 +52,7 @@ export default function TrackCard({
     player: {
       height: 40,
       width: 40,
-      color: colorSchema.fontH3,
+      color: colorSchema.fonts.h2,
       borderRadius: 50,
       justifyContent: "center",
       alignContent: "center",
@@ -60,7 +61,7 @@ export default function TrackCard({
     h2: {
       fontSize: 17,
       fontWeight: "500",
-      color:  colorSchema.fontH3,
+      color: colorSchema.fonts.h2,
       marginRight: 20,
       marginBottom: 7,
     },
@@ -69,7 +70,7 @@ export default function TrackCard({
     },
     subFont: {
       fontSize: 11,
-      color:  colorSchema.fontH2,
+      color:  colorSchema.fonts.normal,
     },
   });
 
@@ -89,7 +90,14 @@ export default function TrackCard({
           <Feather
             name={!checkPlaying() ? "play-circle" : "pause-circle"}
             size={26}
-            color="#989393"
+            color="#f8b133"
+          />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.player} onPress={() => action(index)}>
+          <Feather
+            name={!checkPlaying() ? "book" : "book-open"}
+            size={26}
+            color="#f8b133"
           />
         </TouchableOpacity>
       </View>

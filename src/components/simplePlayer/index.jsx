@@ -19,7 +19,7 @@ export default function SimplePlayer({ action, isAnimate, isDark, slowdown,showS
       padding: 10,
       backgroundColor: !isDark ? "#fff" : "#060606dc",
       borderRadius: 8,
-      shadowColor: "#A200E8",
+      shadowColor: "rgb(0, 165, 255)",
       shadowOffset: {
         width: 0.2,
         height: 0.1,
@@ -33,7 +33,7 @@ export default function SimplePlayer({ action, isAnimate, isDark, slowdown,showS
       alignSelf: "center",
     },
     dashFont: {
-      color: "#fff",
+      color: "rgb(50, 60, 69)",
       fontSize: 12,
       marginTop: 4,
     },
@@ -49,7 +49,7 @@ export default function SimplePlayer({ action, isAnimate, isDark, slowdown,showS
             source={require("../../../assets/lottiesJson/play.json")}
           />
         ) : (
-          <MaterialIcons name="audiotrack" size={50} color="#fff" />
+          <MaterialIcons name="audiotrack" size={50} color="rgb(0, 165, 255)" />
         )}
       </TouchableOpacity>
       {
@@ -73,7 +73,7 @@ export default function SimplePlayer({ action, isAnimate, isDark, slowdown,showS
         <MaterialCommunityIcons
           name="speedometer-slow"
           size={35}
-          color=  {!slowState?"#fff":"#E8A417"}
+          color=  {!slowState?"rgb(50, 60, 69)":"#E8A417"}
         />
         <Text style={styles.dashFont}> Slow</Text>
       </TouchableOpacity>  

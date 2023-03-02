@@ -134,13 +134,13 @@ export function GlobalAudioStorage({ children }) {
 
     let status = await sound.getStatusAsync();
     if (isPlaying || status?.isPlaying) {
-      setIsPLaying(!isPlaying);
+      setIsPLaying(false);
       await sound.pauseAsync();
       let status = await sound.getStatusAsync();
       setAudioProps(status);
       return;
     }
-    setIsPLaying(!isPlaying);
+    setIsPLaying(true);
     await sound.playAsync();
     setAudioProps(status);
   }

@@ -10,7 +10,7 @@ export default function App() {
 
 
   const [fontsLoaded] = useFonts({
-    custom: require("./assets/fonts/Dancing_Script/static/Bold.ttf"),
+    custom: require("./assets/fonts/Lato/Lato-Regular.ttf"),
   });
 
   const onLayoutRootView = React.useCallback(async () => {

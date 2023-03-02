@@ -10,13 +10,15 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
+import Ballon from "../../components/ballon";
+import { Ionicons } from "@expo/vector-icons";
 import DiscContainer from "../../components/disc";
 import colorSchema from "../../../colorSchemma/color";
 import PlayerComponent from "../../components/player";
 const { width, height } = Dimensions.get("screen");
 import Reader from "../../components/reader";
 import { Globalaudio } from "../context";
-
+import PlayerB from "../../components/player/player2";
 import { HeaderLeft } from "../exerciseScreen/header";
 import {
   AntDesign,
@@ -30,13 +32,18 @@ import * as Speech from "expo-speech";
 import speakUp from "../../useful/speak";
 import { searchWebDictionary } from "../../useful/dictionary";
 import { checkList, StoreList } from "../../useful/favoriteList";
+import FloatingBoard from "../../components/floatBoarding";
 export default function PlayerScreen({ navigation }) {
   const dark = true;
   const [displayText, setDisplayText] = React.useState(false);
   const [isSearch, setISearch] = React.useState(false);
   const [selectedWord, setSelectedWord] = React.useState(false);
-  const [fontSizeSub, SetFontSizeSub] = React.useState(16);
+  const [fontSizeSub, SetFontSizeSub] = React.useState(19);
   const [isInFavorite, SetInFavorite] = React.useState(false);
+
+  const [floatBoardValue, setFloatBoardValue] = React.useState(0);
+  const [isFloatingChanging, setFloatingIsChanging] = React.useState(false);
+
   const {
     sound,
     audioProps,
@@ -59,6 +66,7 @@ export default function PlayerScreen({ navigation }) {
   function DisplayText() {
     setDisplayText((prev) => !prev);
   }
+
   function SizeTheFonts() {
     if (fontSizeSub > 24) {
       SetFontSizeSub((prev) => prev - 10);
@@ -98,6 +106,14 @@ export default function PlayerScreen({ navigation }) {
   }, [selectedWord]);
 
   React.useEffect(() => {
+    if (isFloatingChanging) {
+      setTimeout(() => {
+        setFloatingIsChanging(false);
+      }, 1000);
+    }
+  }, [isFloatingChanging]);
+
+  React.useEffect(() => {
     if (selectedWord) {
       const checkWord = async () => {
         SetInFavorite(await checkList(selectedWord));
@@ -116,14 +132,14 @@ export default function PlayerScreen({ navigation }) {
     backgroundImage: {
       height: "100%",
       width: "100%",
-      opacity: displayText ? 0.05 : 0.2,
+      opacity: displayText ? 0.05 : 0.1,
       position: "absolute",
     },
     container: {
       flex: 1,
-      backgroundColor: dark
-        ? "#000"
-        : colorSchema.colorFullPallet.mainSuperDark,
+      backgroundColor: !colorSchema.dark
+        ? "#f1f3f5"
+        : colorSchema.background.primary,
       alignItems: "center",
     },
     ButtonBar: {
@@ -150,7 +166,8 @@ export default function PlayerScreen({ navigation }) {
     },
     playerbox: {
       position: "absolute",
-      bottom: "6%",
+      bottom: "2%",
+      alignSelf: "center",
     },
 
     switchBox: {
@@ -169,31 +186,21 @@ export default function PlayerScreen({ navigation }) {
     topDashBoardContainer: {
       flexDirection: "row",
       justifyContent: "space-around",
-      alignSelf: "flex-end",
+
       alignItems: "center",
-      width: "34%",
-      marginTop: -10,
+      marginRight: -19,
+
+      marginTop: -13,
     },
     selectedWordContainer: {
       position: "absolute",
       bottom: "28%",
       flexDirection: "row",
       alignSelf: "center",
-      left:70,
+      left: 70,
       borderRadius: 10,
     },
-    selectedWordBoxColor: {
-      flexDirection: "row",
-      backgroundColor: "#A200E8",
-      borderRadius: 10,
-      flexWrap: "wrap",
-    },
-    selectedWordButton: {
-      alignSelf: "center",
-      padding: selectedWord ? 17 : 0,
-      alignItems: "center",
-      marginRight: 10,
-    },
+   
     selectedWordFont: {
       fontSize: selectedWord
         ? selectedWord?.split("").length > 9
@@ -205,6 +212,7 @@ export default function PlayerScreen({ navigation }) {
     slowDownButton: {
       justifyContent: "center",
       alignItems: "center",
+      padding: 20,
     },
     starButton: {
       padding: 17,
@@ -212,27 +220,142 @@ export default function PlayerScreen({ navigation }) {
     },
   });
 
+  React.useEffect(() => {
+    navigation.setOptions({
+      title: "",
+      headerTintColor:colorSchema.fonts.h2,
+      headerStyle: { backgroundColor: colorSchema.dark?colorSchema.background.primary: "rgb(255, 255, 255)" },
+
+      headerRight: () => (
+        <View style={styles.topDashBoardContainer}>
+          <TouchableOpacity style={styles.slowDownButton} onPress={slowDown}>
+            <MaterialCommunityIcons
+              name="speedometer-slow"
+              size={23}
+              color={slowState ? "#E8A417" : colorSchema.dark? "#fff":  "rgb(0, 45, 90)"}
+            />
+            <Text style={styles.dashFont}> Slow</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{ alignSelf: "flex-end", padding: 20, top: -3 }}
+            onPress={LaunchActivity}
+          >
+            <AntDesign name="Trophy" size={25} color={"#E8A417"} />
+          </TouchableOpacity>
+        </View>
+      ),
+    });
+  }, [slowDown]);
+
+  async function goAhead() {
+    if (isFloatingChanging) {
+      return;
+    }
+    setFloatBoardValue("+10");
+    setFloatingIsChanging(true);
+
+    await sound.setPositionAsync(played + 10000);
+    await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+  }
+
+  async function goBack() {
+    if (isFloatingChanging) {
+      return;
+    }
+    setFloatBoardValue("-10");
+    setFloatingIsChanging(true);
+    // Haptics.NotificationFeedbackType()
+    await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    await sound.setPositionAsync(played - 10000);
+  }
+
+  async function GoToFlashCard() {
+    if (currentAudio.glossary && currentAudio.glossary.length) {
+      await sound.pauseAsync();
+      navigation.navigate("flashCard");
+    }
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={currentAudio.thumbnail} style={styles.backgroundImage} />
-
      
-      <View style={styles.topDashBoardContainer}>
-        <TouchableOpacity style={styles.slowDownButton} onPress={slowDown}>
-          <MaterialCommunityIcons
-            name="speedometer-slow"
-            size={25}
-            color={slowState ? "#E8A417" : "#c6c6c6"}
-          />
-          <Text style={styles.dashFont}> Slow</Text>
-        </TouchableOpacity>
+    
+      <View
+        style={{
+          width: "90%",
+          height: 90,
+          
 
-        <TouchableOpacity
-          style={{ alignSelf: "flex-end", padding: 20 }}
-          onPress={LaunchActivity}
-        >
-          <AntDesign name="Trophy" size={25} color={"#E8A417"} />
-        </TouchableOpacity>
+          alignSelf: "center",
+          marginHorizontal: 20,
+          marginTop: 10,
+          borderRadius: 8,
+          paddingHorizontal: 10,
+
+          flexDirection: "row",
+          alignContent: "flex-start",
+          alignItems: "flex-start",
+        }}
+      >
+        <View
+          style={{
+            width: "98%",
+            height: 90,
+
+            alignSelf: "center",
+            marginHorizontal: 20,
+            marginTop: 10,
+          
+
+            backgroundColor: "rgb(50, 60, 69)",
+            position: "absolute",
+            opacity: colorSchema.dark? 0.3:0.1,
+            borderRadius:5
+          }}
+        />
+
+        <Image
+          source={currentAudio.thumbnail}
+          style={{
+            width: 80,
+            height: 80,
+            alignSelf: "flex-start",
+            marginHorizontal: 20,
+
+            borderRadius: 8,
+            marginLeft: 10,
+            marginTop: 5,
+          }}
+        />
+
+        <View style={{ padding: 10, maxWidth: "70%" }}>
+          <Text style={{ color: colorSchema.dark? "#fff":  "rgb(0, 45, 90)", fontWeight: "600", fontSize: 16 }}>
+            {currentAudio.Track}
+          </Text>
+          <Text style={{ color: colorSchema.dark? "#fff":  "rgb(0, 45, 90)", fontSize: 12 }}>
+            {currentAudio.Artist}
+          </Text>
+
+          <Text style={{ color: colorSchema.dark? "#fff":  "rgb(0, 45, 90)", fontSize: 12 }}>
+            {currentAudio.language}
+          </Text>
+        </View>
+
+        {currentAudio.glossary && currentAudio.glossary.length && (
+          <TouchableOpacity
+            onPress={GoToFlashCard}
+            style={{
+              height: 40,
+              width: 40,
+              position: "absolute",
+              right: 10,
+              top: 40,
+            }}
+          >
+            <Ionicons name="flash-outline" size={34} color="#E8A417" />
+          </TouchableOpacity>
+        )}
       </View>
 
       <SelectComponent
@@ -251,46 +374,19 @@ export default function PlayerScreen({ navigation }) {
         selectedWord={selectedWord}
         setSelectedWord={setSelectedWord}
         fontSizeSub={fontSizeSub}
+        currentAudio={currentAudio}
+        isInFavorite={isInFavorite}
+        StoredFavoriteLists={StoredFavoriteLists}
+        setIsPLaying={setIsPLaying}
       />
-      {selectedWord && (
-        <View style={styles.selectedWordContainer}>
-          <View style={styles.selectedWordBoxColor}>
-            <TouchableOpacity
-              style={styles.selectedWordButton}
-              onPress={() =>
-                speakUp(Speech, selectedWord, currentAudio.language)
-              }
-            >
-              <Text style={styles.selectedWordFont}>{selectedWord}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.starButton}
-              onPress={async () => await StoredFavoriteLists(selectedWord)}
-            >
-              <AntDesign
-                name="star"
-                size={22}
-                color={isInFavorite ? "#E8A417" : "#c6c6c6"}
-              />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={{ padding: 17 }} onPress={handleSearch}>
-              <AntDesign name="search1" size={22} color={"#c6c6c6"} />
-            </TouchableOpacity>
-          </View>
-
-          <TouchableOpacity
-            style={{ padding: 17 }}
-            onPress={() => setSelectedWord(false)}
-          >
-            <AntDesign name="close" size={22} color={"#c6c6c6"} />
-          </TouchableOpacity>
-        </View>
-      )}
 
       <View style={styles.playerbox}>
-        <PlayerComponent
-          PlayPause={playPause}
+        <PlayerB
+          colorSchema={colorSchema}
+          playPause={() => {
+            setSelectedWord("");
+            playPause();
+          }}
           state={isPlaying}
           audioProps={audioProps}
           audioLength={audioLength}
@@ -298,9 +394,13 @@ export default function PlayerScreen({ navigation }) {
           played={played}
           sound={sound}
           info={currentAudio}
-          colorSchema={colorSchema}
+          goAhead={goAhead}
+          goBack={goBack}
         />
       </View>
+      {isFloatingChanging && (
+        <FloatingBoard value={floatBoardValue} show={isFloatingChanging} />
+      )}
     </SafeAreaView>
   );
 }
@@ -320,11 +420,16 @@ function SelectComponent({
   selectedWord,
   setSelectedWord,
   fontSizeSub,
+  currentAudio,
+  isInFavorite,
+  StoredFavoriteLists,
+  setIsPLaying,
 }) {
   const styles = StyleSheet.create({
     container: {
       height: height < 700 ? "27%" : "35%",
-      marginTop: 10,
+      marginTop: 0,
+      width: "98%",
     },
 
     barWrapper: {
@@ -368,6 +473,10 @@ function SelectComponent({
               isSearch={isSearch}
               selectedWord={selectedWord}
               setSelectedWord={setSelectedWord}
+              currentAudio={currentAudio}
+              isInFavorite={isInFavorite}
+              StoredFavoriteLists={StoredFavoriteLists}
+              setIsPLaying={setIsPLaying}
             />
           </View>
         </View>
@@ -381,9 +490,34 @@ function SelectComponent({
   );
 }
 /*
-
- <Text style={{color:"#fff", fontSize:40}}> 
+<Text style={{color:"#fff", fontSize:40}}> 
         {played}
       </Text>
 
+<Text style={{color:"#fff", fontSize:40}}> 
+        {played}
+      </Text>
+
+ <Image source={currentAudio.thumbnail} style={styles.backgroundImage} />
+
+  
+
 */
+
+const name = [
+  {
+    vocabulario: "",
+    article: "",
+    translation: "",
+    sentencesExample: [""],
+  },
+];
+
+/*
+
+
+
+
+
+
+ */

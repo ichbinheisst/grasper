@@ -13,7 +13,7 @@ import Animated, {
   useAnimatedStyle,
 } from "react-native-reanimated";
 
-export default function CardAlbum({ colorSchema, data, action, index, dark }) {
+export default function CardAlbum({ colorSchema, data, action, index }) {
   const [selected] = React.useState(data.selected);
   const animationTiming = 1000;
 
@@ -50,13 +50,7 @@ export default function CardAlbum({ colorSchema, data, action, index, dark }) {
     container: {},
     cardContainer: {
       top: selected ? -20 : 0,
-
       borderRadius: 6,
-      //backgroundColor: colorSchema.secondaryBackGround,
-      shadowColor: dark ? "#000" : "#aca5a5",
-      shadowOpacity: 0.5,
-      shadowRadius: 5,
-      elevation: 6,
       marginHorizontal: 10,
       paddingTop: 5,
 
@@ -73,7 +67,7 @@ export default function CardAlbum({ colorSchema, data, action, index, dark }) {
     cardTitleText: {
       fontWeight: "600",
       fontSize: selected ? 17 : 14,
-      color: colorSchema.fontH3,
+      color:colorSchema.fonts.h3,
     },
     cardPlayerButton: {
       height: size.height / 2,
@@ -81,14 +75,14 @@ export default function CardAlbum({ colorSchema, data, action, index, dark }) {
       position: "absolute",
       alignSelf: "center",
       top: size.height / 5,
-      backgroundColor: "#fff",
+      backgroundColor: colorSchema.background.primary,
       borderRadius: 100,
       alignItems: "center",
       justifyContent: "center",
       opacity: 0.8,
     },
     CardPosition: {
-      backgroundColor: "#00000069",
+      backgroundColor: colorSchema.triade.primary,
       opacity: 0.8,
       height: 30,
       width: 30,
@@ -103,7 +97,7 @@ export default function CardAlbum({ colorSchema, data, action, index, dark }) {
     CardPositionFont: {
       fontWeight: "800",
       color: "#fff",
-      fontSize:11
+      fontSize: 11,
     },
   });
 
@@ -125,8 +119,8 @@ export default function CardAlbum({ colorSchema, data, action, index, dark }) {
             <Text
               style={{
                 ...styles.cardTitleText,
-                fontSize: data.selected ? 12 : 9,
-                color: "#c6c6c6aa",
+                fontSize: data.selected ? 13 : 11,
+                color:colorSchema.fonts.normal,
                 marginTop: 5,
               }}
             >
@@ -135,9 +129,7 @@ export default function CardAlbum({ colorSchema, data, action, index, dark }) {
           </View>
         </Animated.View>
 
-        <View style={styles.CardPosition}>
-          <Text style={styles.CardPositionFont}>{index + 1}</Text>
-        </View>
+        
       </Animated.View>
     </TouchableOpacity>
   );

@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
    minHeight: 40,
    shadowColor: "#000",
-   shadowOpacity: 0.5,
+   shadowOpacity: 0.2,
    shadowRadius: 5,
    elevation: 6,
   },

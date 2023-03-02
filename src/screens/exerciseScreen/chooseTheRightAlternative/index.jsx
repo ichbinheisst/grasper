@@ -9,6 +9,7 @@ import {
 } from "./chooseTheRightAlternativeController";
 import PressableBox from "../../../components/PressableBox";
 import SimplePlayer from "../../../components/simplePlayer";
+import colorSchema from "../../../../colorSchemma/color";
 
 export default function ChooseTheRightAlternativeScreen({ navigation }) {
   const {
@@ -35,7 +36,7 @@ export default function ChooseTheRightAlternativeScreen({ navigation }) {
   const [slowState,setSlowState] = React.useState(false)
 
 
-  const dark = true;
+  const dark = colorSchema.dark;
 
   const styles = StyleSheet.create({
     activityContainer: {
@@ -127,7 +128,7 @@ export default function ChooseTheRightAlternativeScreen({ navigation }) {
 
   return (
     <ActivityTemplate
-      isDark={dark}
+      isDark={colorSchema.dark}
       navigation={navigation}
       showFeedBack={feedBack}
       statusFeedback={animationsStatus}
@@ -151,7 +152,7 @@ export default function ChooseTheRightAlternativeScreen({ navigation }) {
                   content={{ word }}
                   action={Correct}
                   key={index}
-                  boxColor={"#72109C"}
+                  boxColor={"rgb(0, 165, 255)"}
                   fontColor={"#fff"}
                 />
               );

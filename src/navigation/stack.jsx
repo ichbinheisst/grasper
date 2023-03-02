@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -23,6 +23,8 @@ import DialogReaderScreen from "../screens/dialogReaderScreen";
 import VideoScreen from "../screens/videoScreen";
 import colorSchema from "../../colorSchemma/color";
 import BottomTabs from "./bottom";
+import AlbumScreen from "../screens/albumScreen";
+
 
 const Stack = createNativeStackNavigator();
 const dark = true;
@@ -47,7 +49,7 @@ export default function Stacker({ font, navigation }) {
           component={BottomTabs}
           options={{
             title: "Voicer",
-            headerTintColor: "#fff",
+            headerTintColor: !colorSchema.dark? "rgb(0, 45, 90)":"rgb(0, 165, 255)",
             
             headerStyle: header.headerStyle,
             headerBackTitleStyle:header.headerTitleStyle,
@@ -62,10 +64,10 @@ export default function Stacker({ font, navigation }) {
                   }}
                 >
                   <TouchableOpacity style={{ marginHorizontal: 40 }}>
-                    <AntDesign name="bells" size={20} color="#fff" />
+                    <AntDesign name="bells" size={20} color= {!colorSchema.dark? "rgb(0, 45, 90)":"rgb(0, 165, 255)"} />
                   </TouchableOpacity>
                   <TouchableOpacity>
-                    <AntDesign name="search1" size={23} color="#fff" />
+                    <AntDesign name="search1" size={23} color={!colorSchema.dark? "rgb(0, 45, 90)":"rgb(0, 165, 255)"} />
                   </TouchableOpacity>
                 </View>
               );
@@ -74,9 +76,9 @@ export default function Stacker({ font, navigation }) {
               return (
                 <View style={{}}>
                   <TouchableOpacity
-                    onPress={() => navigation.navigate("setting")}
+                    onPress={() => Alert.alert("botão desligado")}
                   >
-                    <AntDesign name="bars" size={23} color="#ffff" />
+                    <AntDesign name="bars" size={23} color={!colorSchema.dark? "rgb(0, 45, 90)":"rgb(0, 165, 255)"} />
                   </TouchableOpacity>
                 </View>
               );
@@ -98,6 +100,14 @@ export default function Stacker({ font, navigation }) {
           options={header}
           headerShown={false}
         />
+
+<Stack.Screen
+          name="album"
+          component={AlbumScreen}
+          options={header}
+          headerShown={false}
+        />
+
 
         <Stack.Screen
           name="favorites"

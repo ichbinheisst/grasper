@@ -23,7 +23,7 @@ export default function WordCard({ colorSchema, action, data, index, state }) {
 
       alignItems: "center",
       borderBottomWidth: 0.3,
-      borderColor: "#A200E8",
+      borderColor: "rgb(0, 165, 255)",
       marginTop: 5,
     },
 
@@ -48,7 +48,7 @@ export default function WordCard({ colorSchema, action, data, index, state }) {
     h2: {
       fontSize: 19,
       fontWeight: "500",
-      color: "#fff",
+      color: "rgb(0, 45, 90)",
       marginRight: 10,
     },
     iconBox: {
@@ -69,7 +69,7 @@ export default function WordCard({ colorSchema, action, data, index, state }) {
           style={{ marginHorizontal: 20, padding: 5 }}
           onPress={() => action(data)}
         >
-          <AntDesign name="notification" size={20} color={"#fff"} />
+          <AntDesign name="notification" size={20} color={"rgb(0, 45, 90)"} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={async () => {
@@ -79,7 +79,7 @@ export default function WordCard({ colorSchema, action, data, index, state }) {
           }}
           style={{ padding: 5 }}
         >
-          <AntDesign name="search1" size={20} color={"#fff"} />
+          <AntDesign name="search1" size={20} color={"rgb(0, 45, 90)"} />
         </TouchableOpacity>
       </View>
     </View>

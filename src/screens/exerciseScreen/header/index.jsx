@@ -80,7 +80,7 @@ export function HeaderLeft({ action }) {
   return (
     <View style={styles.containerLeft}>
       <TouchableOpacity onPress={action}>
-        <Ionicons name="chevron-back" size={30} color="#ffff" />
+        <Ionicons name="chevron-back" size={30} color={"rgb(0, 165, 255)"} />
       </TouchableOpacity>
     </View>
   );

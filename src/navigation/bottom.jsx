@@ -5,7 +5,8 @@ import colorSchema from "../../colorSchemma/color";
 import { TouchableOpacity, Text, View, StyleSheet } from "react-native";
 import FavoriteListScreen from "../screens/favoriteListScreen";
 import { AntDesign } from "@expo/vector-icons";
-
+import MyButton from "../components/button/spinningButton";
+import AlbumScreen from "../screens/albumScreen";
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabs({ navigation }) {
@@ -19,11 +20,17 @@ export default function BottomTabs({ navigation }) {
     },
   };
 
+  function navigate(address) {
+
+    if (!address) return;
+    navigation.navigate(address);
+  }
+
   return (
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: colorSchema.main,
+          backgroundColor: colorSchema.background.primary,
           //paddingVertical: 10,
           //height: 90,
         },
@@ -40,26 +47,41 @@ export default function BottomTabs({ navigation }) {
             <View style={{ alignItems: "center" }}>
               <AntDesign
                 name="home"
-                size={20}
-                color={focused ? "#ffff" : colorSchema.fontH2}
+                size={25}
+                color={
+                  focused
+                  ? "rgb(0, 45, 90)"
+                  : !colorSchema.dark
+                  ? "#c6c6c6"
+                  : "rgb(0, 165, 255)"
+                }
               />
             </View>
           ),
         }}
       />
+
       <Tab.Screen
-        name="Settings"
-        component={SettingScreenScreen}
+        name="x"
+        component={FavoriteListScreen}
         options={{
           tabBarShowLabel: false,
           headerShown: false,
-          tabBarIcon: ({ color, size, focused }) => (
-            <View style={{ alignItems: "center" }}>
-              <AntDesign name="bars" size={23} color={focused ? "#ffff" : colorSchema.fontH2}/>
+          tabBarButton: ({ color, size, focused }) => (
+            <View
+              style={{
+                alignItems: "center",
+                top: -50,
+                alignSelf: "center",
+                width: 100,
+              }}
+            >
+              <MyButton action={() => {}} navigate={navigate} />
             </View>
           ),
         }}
       />
+
       <Tab.Screen
         name="Favorite"
         component={FavoriteListScreen}
@@ -70,8 +92,14 @@ export default function BottomTabs({ navigation }) {
             <View style={{ alignItems: "center" }}>
               <AntDesign
                 name="star"
-                size={20}
-                color={focused ? "#ffff" : colorSchema.fontH2}
+                size={26}
+                color={
+                  focused
+                    ? colorSchema.fonts.h2
+                    : !colorSchema.dark
+                    ? "#c6c6c6"
+                    : colorSchema.triade.primary
+                }
               />
             </View>
           ),
@@ -80,3 +108,31 @@ export default function BottomTabs({ navigation }) {
     </Tab.Navigator>
   );
 }
+/*
+
+
+   <Tab.Screen
+        name="Settings"
+        component={SettingScreenScreen}
+        options={{
+          tabBarShowLabel: false,
+          headerShown: false,
+          tabBarIcon: ({ color, size, focused }) => (
+            <View style={{ alignItems: "center" }}>
+              <AntDesign
+                name="bars"
+                size={23}
+                color={
+                  focused
+                    ? "#f8b133"
+                    : !colorSchema.dark
+                    ? "rgb(0, 45, 90)"
+                    : "rgb(0, 165, 255)"
+                }
+              />
+            </View>
+          ),
+        }}
+      />
+
+*/

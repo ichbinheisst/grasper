@@ -28,7 +28,7 @@ export default function ActivityTemplate({
       alignContent: "center",
       alignItems: "center",
       paddingTop: 0,
-      backgroundColor: isDark ? "#000" : "#fff",
+      backgroundColor: isDark ? "#000" : "#f1f3f5",
     },
 
     backgroundImage: {
@@ -68,7 +68,7 @@ export default function ActivityTemplate({
       title: "",
 
       headerStyle: {
-        backgroundColor: "#000", //"#A200E8",
+        backgroundColor: isDark? "#000":"#fff", //"#A200E8",
       },
       headerRight: () => (
         <HeaderRight
@@ -85,20 +85,13 @@ export default function ActivityTemplate({
 
   return (
     <View style={styles.container}>
-      <Image
-        source={
-          backgroundImage
-            ? backgroundImage
-            : require("../../../../mockup/album/taylor.png")
-        }
-        style={styles.backgroundImage}
-      />
+     
 
       <View style={styles.progressBarBox}>
         <ProgressBar
           total={total}
           concluded={page}
-          progressColor={"#A200E8"}
+          progressColor={"rgb(0, 165, 255)"}
           showIcon={true}
           isDark={isDark}
         />
@@ -118,3 +111,16 @@ export default function ActivityTemplate({
     </View>
   );
 }
+/*
+
+ <Image
+        source={
+          backgroundImage
+            ? backgroundImage
+            : require("../../../../mockup/album/taylor.png")
+        }
+        style={styles.backgroundImage}
+      />
+
+
+*/

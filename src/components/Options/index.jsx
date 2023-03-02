@@ -12,7 +12,7 @@ export default function OptionBox({ options, action,dark, color }) {
       width: "89%",
       flexDirection: "row",
       justifyContent: "space-between",
-      marginTop: 20,
+      marginTop: 10,
       alignItems: "center",
       alignContent: "center",
       alignSelf: "center",
@@ -21,22 +21,21 @@ export default function OptionBox({ options, action,dark, color }) {
     OptionBox: {
       padding: 10,
       borderRadius: 100,
-      borderWidth: 1,
+      borderWidth: dark? 1:0,
       height: 40,
-      // width: 80,
-      borderColor: "#A200E8",
+      
+      borderColor: "rgb(33, 35, 37)",
       alignContent: "center",
       alignItems: "center",
       justifyContent: "center",
+      backgroundColor: color.background.darkest
     },
     fontStyle: {
       fontWeight: "600",
-      color: dark? "#c6c6c6":"#A200E8",
+      color:color.fonts.h4_light,
     },
   });
   
-
-
   return (
     <View style={styles.container}>
       {options.map((el) => {

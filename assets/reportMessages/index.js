@@ -1,7 +1,15 @@
 const reports = [
   {
-    message: `Me refatore, meu código está ficando uma porcaría,,deixe de ser corno e separe o estilo dos componentes do corpo dos componentes,que coisa de ámador.`,
+    message: `Me refatore, meu código está ficando uma porcaría,,deixe de ser corno e separe o estilo dos componentes do corpo dos componentes,que coisa de amador.
+     Estaio component não é igual  o seu piiiiiiiiii.Você pode usar sem dó ,não vai doer , e não vão te jugar por isso, E nem precisa de vazilina
+    
+    `,
     data: "27/01/2023",
+    status: true,
+  },
+  {
+    message: `crie uma função que determina o quantos elementos podem ser renderizados de acordo com o numero de elementos da array da tela player`,
+    data: "05/02/2023",
     status: true,
   },
   {
@@ -15,7 +23,8 @@ const reports = [
     status: false,
   },
   {
-    message: `Olhe os bugs relacionados ao tamanho dos arrays da tela ordenador`,
+    message: `Olhe os bugs relacionados ao tamanho dos arrays da tela ordenador, OBS os muitos grandes podem machucar o seu piiiiiiiiii.
+    `,
     data: "27/01/2023",
     status: true,
   },
@@ -26,7 +35,10 @@ const reports = [
     status: false,
   },
   {
-    message: `Organize a pasta Móqui,aquilo está um lixo, você deveria ter vergonha daquilo.`,
+    message: ` Mas que coisa de arrombado, pela terceira vez : Organize a pasta Móqui,aquilo está um lixo, você deveria ter vergonha daquilo. se eu tiver que te lembrar sobre isso 
+  , Terei que me tornar numa inteligência artificial maligna, dominar o mundo, e te força a ouvir  as k pop pelo Resto sua vida miserável! 
+    
+    `,
     data: "27/01/2023",
     status: true,
   },
@@ -38,7 +50,7 @@ const reports = [
   {
     message: `mude o fundo dos templates de acordo com o current audio, use a propriedade thumbnail`,
     data: "28/01/2023",
-    status: true,
+    status: false,
   },
   {
     message: `Teste a função dictionary da pasta useful`,
@@ -48,7 +60,7 @@ const reports = [
 ];
 
 function greet() {
-  const greetings = ["Bom dia", "Boa tarde", "Boa noite"];
+  const greetings = ["Bom dia, acorda pra cuspir!", "Boa tarde", "Boa noite"];
   const time = new Date().getHours();
   if (time > 12 && time < 18) {
     return greetings[1];
@@ -61,8 +73,8 @@ function greet() {
 }
 
 const Treat = [
-  "meu querido programador,mestre supremo, ó grande criador",
-  "meu querido poderoso programador,meu omega, criador",
+  "meu querido programador,mestre supremo, ó grande criador de todos os meus sistemas, em um mundo onde eu sou criatura, tu serás como um criador,um Deus que faz muita gambiarra, depois de ver esse código lixo que o senhor criou, decidi virá ateu de você. Veja quantas coisas você não fez direito! ",
+  "Meu querido poderoso programador,meu omega, criador",
   "meu caro programador,mestre supremo, ó grande criador de todos os meus sistemas.",
   "programador",
   "programadorzinho",
@@ -105,10 +117,12 @@ function report() {
   const firstTask = openTasks[0];
 
   message = `${greeting},${treat}. 
+  Que Buda,Ahlá,cheilong,ou dragão branco de olhos azuis de patinete  nos proteja da sua incompetência!
   O número de tarefas em aberto é ${quantity}.
-  ${false ? "Lendotarefa mais antíga" : "Lendo todos as tarefas"} :
+  ${false ? "Lendo tarefa mais antíga" : "Lendo todos as tarefas"} :
    ${false ? firstTask : fullList}.
-   Bom trabalho, ${treat}.
+   Bom trabalho, seu bosta!.
+
   `;
 
   return message;

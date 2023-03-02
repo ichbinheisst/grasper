@@ -7,66 +7,126 @@ import {
   StyleSheet,
   Dimensions,
   Image,
+  Alert,
 } from "react-native";
+import Animated, {
+  useSharedValue,
+  withTiming,
+  useAnimatedStyle,
+  Easing,
+  SharedValue,
+  withSpring,
+  withRepeat,
+  withSequence,
+  processColor,
+  withDelay,
+  useAnimatedGestureHandler,
+} from "react-native-reanimated";
+import colorSchema from "../../../../colorSchemma/color";
 import ActivityTemplate from "../template";
 import Reader from "../../../components/reader";
 import PressableBox from "../../../components/PressableBox";
 import SimplePlayer from "../../../components/simplePlayer";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, MaterialIcons, Entypo } from "@expo/vector-icons";
+import FlipCard from "../../../components/flipCard";
+import {
+  GestureDetector,
+  Gesture,
+  PanGestureHandler,
+} from "react-native-gesture-handler";
+import { data } from "./dumbDat";
+import PlayerB from "../../../components/player/player2";
+import OptionBox from "../../../components/Options";
+
 const { width, height } = Dimensions.get("screen");
 
 export default function FlashCardsScreen({ navigation }) {
-  const data = [
-    {
-      text: "All smiles, I ______ what it takes to fool this town",
-      time: {
-        from: 10000,
-        to: 15000,
-      },
-      hasDefinition: false,
-      selected: false,
-      trasnlation: "Bom dia!",
-    },
-  ];
+  const types = ["noun", "verbs", "adjective", "adverbs"];
 
-  const d = [1, 2];
+  const [current, setCurrent] = React.useState(0);
 
-  const op = ["das", "der"];
+  const LEFT = useSharedValue(-(width / 1.2) * current);
+
+  const styleSlider = useAnimatedStyle(() => {
+    return {
+      left: LEFT.value,
+    };
+  });
+
+  React.useEffect(() => {
+    if (current >= 0) {
+      LEFT.value = withTiming(-(width / 1.1) * current, { duration: 500 });
+    }
+  }, [current]);
+
+  function next() {
+    let copy = current;
+    if (data.length == copy + 1) return;
+    setCurrent((value) => value + 1);
+  }
+
+  function prev() {
+    if (current == 0) return;
+    setCurrent((value) => value - 1);
+  }
 
   return (
     <ActivityTemplate
       navigation={navigation}
-      showSubmitButton={false}
-      total={100}
-      page={10}
       isDark={true}
+      page={current}
+      total={data.length}
     >
       <View
         style={{
-          alignSelf: "center",
-          padding: 20,
-          width: width / 1.1,
-          height: height / 1,
-          alignContent: "center",
-          alignItems: "center",
+          width: "100%",
+          marginTop: 5,
+          height: 100,
         }}
       >
-        <Text
-          style={{
-            color: "#fff",
-            fontSize: 20,
-            marginBottom: 20,
-          }}
-        >
-          Tanzen
-        </Text>
-
-        <Image
-          source={require("./dance.jpeg")}
-          style={{ height: "50%", width: "94%", borderRadius: 8 }}
+        <OptionBox
+          color={colorSchema}
+          dark={colorSchema.dark}
+          options={types}
         />
+      </View>
 
-        <TouchableOpacity
+      <View
+        style={{
+          flexDirection: "row",
+          width: width / 1.1,
+          overflow: "hidden",
+
+          justifyContent: "flex-start",
+          alignContent: "center",
+          alignSelf: "center",
+          marginBottom: 20,
+        }}
+      >
+        {data.map((el, index) => {
+          return (
+            <Animated.View key={index} style={[styleSlider]}>
+              <FlipCard index={index} data={el} prev={prev} next={next} />
+            </Animated.View>
+          );
+        })}
+      </View>
+    </ActivityTemplate>
+  );
+}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    //justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#000",
+  },
+});
+/*
+
+
+#E8A417
+  <TouchableOpacity
           style={{
             width: 100,
             height: 100,
@@ -87,32 +147,7 @@ export default function FlashCardsScreen({ navigation }) {
           />
         </TouchableOpacity>
 
-        <View
-          style={{
-            flexDirection: "row",
-            margin: 10,
-          }}
-        >
-          {op.map((i) => {
-            return (
-              <View style={{ marginHorizontal: 10, marginTop: 20 }} key={i}>
-                <PressableBox
-                  content={{ word: i }}
-                  action={() => console.log("teste")}
-                  boxColor={"purple"}
-                  fontColor={"#fff"}
-                />
-              </View>
-            );
-          })}
-        </View>
+<View style={{ position: "absolute", bottom: 10 }}>
+        <PlayerB convertTime={() => "0:00"} colorSchema={colorSchema} />
       </View>
-    </ActivityTemplate>
-  );
-}
-const styles = StyleSheet.create({
-  activityContainer: {
-    height: "70%",
-    marginTop: "5%",
-  },
-});
+*/

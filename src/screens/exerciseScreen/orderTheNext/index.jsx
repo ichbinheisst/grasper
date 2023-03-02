@@ -10,6 +10,7 @@ import {
   StopPlay,
   generateExercise,
 } from "./orderTheNextController";
+import colorSchema from "../../../../colorSchemma/color";
 export default function OrderTheNext({ navigation }) {
   const dark = true;
   const {
@@ -121,7 +122,7 @@ export default function OrderTheNext({ navigation }) {
   return (
     <ActivityTemplate
       navigation={navigation}
-      isDark={true}
+      isDark={colorSchema.dark}
       total={data.length}
       page={page}
       showFeedBack={feedBack}
@@ -130,7 +131,7 @@ export default function OrderTheNext({ navigation }) {
       <ScrollView>
         <View style={styles.activityContainer}>
           <Text style={styles.anouncementFont}>Order the sentences</Text>
-          <SimplePlayer action={play} isAnimate={isPlaying} isDark={dark} />
+          <SimplePlayer action={play} isAnimate={isPlaying} isDark={colorSchema.dark} />
           <View
             style={{
               minHeight: 50,
@@ -167,7 +168,7 @@ export default function OrderTheNext({ navigation }) {
                   <PressableSentence
                     content={sentence}
                     action={order}
-                    boxColor={"#A200E8"}
+                    boxColor={"rgb(50, 60, 69)"}
                     fontColor={"#fff"}
                     index={index}
                   />
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
   anouncementFont: {
     fontSize: 18,
     marginBottom: 10,
-    color: "#fff",
+    color: "rgb(50, 60, 69)",
   },
 
   sentenceBox: {

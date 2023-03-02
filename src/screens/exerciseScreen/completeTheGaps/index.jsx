@@ -11,6 +11,7 @@ import ActivityTemplate from "../template";
 import Reader from "../../../components/reader";
 import PressableBox from "../../../components/PressableBox";
 import SimplePlayer from "../../../components/simplePlayer";
+import colorSchema from "../../../../colorSchemma/color";
 const { width } = Dimensions.get("screen");
 
 export default function CompleteThegapsScreen({ navigation }) {
@@ -64,11 +65,11 @@ export default function CompleteThegapsScreen({ navigation }) {
       showSubmitButton={false}
       total={100}
       page={10}
-      isDark={true}
+      isDark={colorSchema.dark}
     >
       <View style={styles.activityContainer}>
         <View style={{ width: 70, alignSelf: "center" }}>
-          <SimplePlayer action={() => console.log("teste")}  isDark={true}/>
+          <SimplePlayer action={() => console.log("teste")} isDark={true} />
         </View>
 
         <View style={{ height: "70%", padding: 10 }}>
@@ -89,9 +90,7 @@ export default function CompleteThegapsScreen({ navigation }) {
                   content={{ word: "word" }}
                   action={() => console.log("teste")}
                   fontColor={"#fff"}
-                  boxColor={"purple"}
-                 
-
+                  boxColor={"rgb(0, 165, 255)"}
                 />
               </View>
             );
@@ -111,13 +110,13 @@ const styles = StyleSheet.create({
     minWidth: width / 2,
 
     padding: 20,
-   // backgroundColor:'#fff',
+    // backgroundColor:'#fff',
     alignSelf: "center",
     flexDirection: "row",
     flexWrap: "wrap",
     borderRadius: 10,
     shadowOffset: {
-      width:1,
+      width: 1,
       height: 1,
     },
     shadowColor: "#6D009C",
@@ -133,6 +132,6 @@ const styles = StyleSheet.create({
   ReaderboxFont: {
     fontSize: 20,
     fontWeight: "500",
-    color:"#fff"
+    color: "rgb(50, 60, 69)",
   },
 });
