@@ -109,6 +109,11 @@ export default function Reader({
     };
   }
 
+
+
+
+
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.textBox}>

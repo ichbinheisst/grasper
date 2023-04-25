@@ -7,6 +7,7 @@ import FavoriteListScreen from "../screens/favoriteListScreen";
 import { AntDesign } from "@expo/vector-icons";
 import MyButton from "../components/button/spinningButton";
 import AlbumScreen from "../screens/albumScreen";
+import SquareButton from "../components/button/squareButton";
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabs({ navigation }) {
@@ -21,7 +22,6 @@ export default function BottomTabs({ navigation }) {
   };
 
   function navigate(address) {
-
     if (!address) return;
     navigation.navigate(address);
   }
@@ -49,11 +49,11 @@ export default function BottomTabs({ navigation }) {
                 name="home"
                 size={25}
                 color={
-                  focused
-                  ? "rgb(0, 45, 90)"
-                  : !colorSchema.dark
-                  ? "#c6c6c6"
-                  : "rgb(0, 165, 255)"
+                  !focused
+                    ? colorSchema.fonts.h2
+                    : !colorSchema.dark
+                    ? "#c6c6c6"
+                    : colorSchema.triade.primary
                 }
               />
             </View>
@@ -71,12 +71,11 @@ export default function BottomTabs({ navigation }) {
             <View
               style={{
                 alignItems: "center",
-                top: -50,
+                top: -15,
                 alignSelf: "center",
-                width: 100,
               }}
             >
-              <MyButton action={() => {}} navigate={navigate} />
+              <SquareButton  action={()=>navigation.navigate("setting") }/>
             </View>
           ),
         }}
@@ -92,9 +91,9 @@ export default function BottomTabs({ navigation }) {
             <View style={{ alignItems: "center" }}>
               <AntDesign
                 name="star"
-                size={26}
+                size={25}
                 color={
-                  focused
+                  !focused
                     ? colorSchema.fonts.h2
                     : !colorSchema.dark
                     ? "#c6c6c6"

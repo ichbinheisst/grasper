@@ -24,7 +24,7 @@ import VideoScreen from "../screens/videoScreen";
 import colorSchema from "../../colorSchemma/color";
 import BottomTabs from "./bottom";
 import AlbumScreen from "../screens/albumScreen";
-
+import QRCodeReader from "../components/QRcodeReader";
 
 const Stack = createNativeStackNavigator();
 const dark = true;
@@ -49,10 +49,12 @@ export default function Stacker({ font, navigation }) {
           component={BottomTabs}
           options={{
             title: "Voicer",
-            headerTintColor: !colorSchema.dark? "rgb(0, 45, 90)":"rgb(0, 165, 255)",
-            
+            headerTintColor: !colorSchema.dark
+              ? "rgb(0, 45, 90)"
+              : "rgb(0, 165, 255)",
+
             headerStyle: header.headerStyle,
-            headerBackTitleStyle:header.headerTitleStyle,
+            headerBackTitleStyle: header.headerTitleStyle,
             headerShown: true,
             headerRight: () => {
               return (
@@ -64,10 +66,26 @@ export default function Stacker({ font, navigation }) {
                   }}
                 >
                   <TouchableOpacity style={{ marginHorizontal: 40 }}>
-                    <AntDesign name="bells" size={20} color= {!colorSchema.dark? "rgb(0, 45, 90)":"rgb(0, 165, 255)"} />
+                    <AntDesign
+                      name="bells"
+                      size={20}
+                      color={
+                        !colorSchema.dark
+                          ? "rgb(0, 45, 90)"
+                          : "rgb(0, 165, 255)"
+                      }
+                    />
                   </TouchableOpacity>
                   <TouchableOpacity>
-                    <AntDesign name="search1" size={23} color={!colorSchema.dark? "rgb(0, 45, 90)":"rgb(0, 165, 255)"} />
+                    <AntDesign
+                      name="search1"
+                      size={23}
+                      color={
+                        !colorSchema.dark
+                          ? "rgb(0, 45, 90)"
+                          : "rgb(0, 165, 255)"
+                      }
+                    />
                   </TouchableOpacity>
                 </View>
               );
@@ -78,7 +96,15 @@ export default function Stacker({ font, navigation }) {
                   <TouchableOpacity
                     onPress={() => Alert.alert("botão desligado")}
                   >
-                    <AntDesign name="bars" size={23} color={!colorSchema.dark? "rgb(0, 45, 90)":"rgb(0, 165, 255)"} />
+                    <AntDesign
+                      name="bars"
+                      size={23}
+                      color={
+                        !colorSchema.dark
+                          ? "rgb(0, 45, 90)"
+                          : "rgb(0, 165, 255)"
+                      }
+                    />
                   </TouchableOpacity>
                 </View>
               );
@@ -101,13 +127,19 @@ export default function Stacker({ font, navigation }) {
           headerShown={false}
         />
 
-<Stack.Screen
+        <Stack.Screen
+          name="QR"
+          component={QRCodeReader}
+          options={header}
+          headerShown={false}
+        />
+
+        <Stack.Screen
           name="album"
           component={AlbumScreen}
           options={header}
           headerShown={false}
         />
-
 
         <Stack.Screen
           name="favorites"

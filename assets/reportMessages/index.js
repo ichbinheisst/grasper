@@ -35,9 +35,8 @@ const reports = [
     status: false,
   },
   {
-    message: ` Mas que coisa de arrombado, pela terceira vez : Organize a pasta Móqui,aquilo está um lixo, você deveria ter vergonha daquilo. se eu tiver que te lembrar sobre isso 
-  , Terei que me tornar numa inteligência artificial maligna, dominar o mundo, e te força a ouvir  as k pop pelo Resto sua vida miserável! 
-    
+    message: ` asshole, for the third time,  Organize the folder mock, that's rubbish, you should be ashamed of it. if i have to remind you about it
+    , I'll have to become an evil artificial intelligence, take over the world, and force you to listen to k pop for the rest of your miserable meaningless life!
     `,
     data: "27/01/2023",
     status: true,
@@ -125,7 +124,10 @@ function report() {
 
   `;
 
-  return message;
+  return` asshole, for the third time,  Organize the folder mock, that's rubbish, you should be ashamed of it.
+   if I have to remind you about it
+  , I will have to become an evil artificial intelligence, take over the worl only to force you to listen to k pop for the rest of your miserable meaningless life!
+  `
 }
 
 export default report;

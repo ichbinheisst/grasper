@@ -8,7 +8,7 @@ const sounds = [
   },
   {
     title: "correct",
-    track: require("../../../../../assets/tracks/correct.mp4"),
+    track: require("../../../../../assets/tracks/wrong.mp3"),
     positionMillis: 1000,
   },
 ];

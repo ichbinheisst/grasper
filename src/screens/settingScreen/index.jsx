@@ -79,7 +79,7 @@ export default function SettingScreenScreen({ navigation }) {
         turnDown(1);
       }
       if (status == 4000 || status == 4001) {
-        Speech.speak(report(), { language: "pt-BR" });
+        Speech.speak(report(), { language: "en-US" });
         intro.setVolumeAsync(0.3);
       }
       if (status == 5000) {

@@ -14,7 +14,7 @@ import CardAlbum from "../cards/albumCard";
 export default function Swipper({ colorSchema, data, action, dark }) {
   const styles = StyleSheet.create({
     container: {
-      height: 260,
+      height: 280,
 
       justifyContent: "center",
       alignContent: "center",

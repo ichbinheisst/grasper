@@ -52,7 +52,7 @@ export default function AnimatedButton({ action, isAnimated }) {
 }
 const styles = StyleSheet.create({
   checkButton: {
-    backgroundColor: "rgb(0, 165, 255)",
+    backgroundColor: "rgb(0, 45, 90)",
     alignSelf: "center",
     borderRadius: 10,
     justifyContent: "center",

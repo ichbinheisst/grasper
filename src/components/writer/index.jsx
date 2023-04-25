@@ -40,7 +40,8 @@ export default function Writter({ render, text, color, subText, propStyle }) {
 
   const styles = StyleSheet.create({
     container: {
-      maxWidth:"100%"
+      maxWidth:"100%",
+      height:50
       //flexDirection: "row",
     },
     font: {
@@ -74,11 +75,7 @@ export default function Writter({ render, text, color, subText, propStyle }) {
   return (
     <View style={styles.container}>
       <Text style={styles.font}>{text.trim()}</Text>
-      <View style={styles.descriptionBox}>
-        <Text style={styles.descriptionBoxfont}>
-        Lorem ipsum dolor sit amet, consectetur adipiscin
-        </Text>
-      </View>
+      
 
       <Animated.View
         style={[stylingBlinder, { backgroundColor: color.background.primary }]}

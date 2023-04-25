@@ -19,7 +19,7 @@ export default function TrackCard({
   state,
   trackPlayingInfo,
   action2,
-  dark
+  dark,
 }) {
   function checkPlaying() {
     if (state && trackPlayingInfo.id == data.id) {
@@ -30,15 +30,17 @@ export default function TrackCard({
 
   const styles = StyleSheet.create({
     container: {
-      height: 65,
-      // width: "100%",
+      height: 80,
+       
       flexDirection: "row",
       justifyContent: "space-between",
+      alignContent: "center",
       padding: 10,
       alignItems: "center",
       //borderBottomWidth: 0.3,
       borderColor: colorSchema.colorFullPallet.mainColor,
       marginTop: 5,
+     // backgroundColor:checkPlaying()?"rgb(50, 60, 69)":"#000"
     },
 
     box: {
@@ -48,7 +50,9 @@ export default function TrackCard({
       alignItems: "center",
     },
 
-    boxInfo: {},
+    boxInfo: {
+      width: "85%",
+    },
     player: {
       height: 40,
       width: 40,
@@ -59,10 +63,10 @@ export default function TrackCard({
       alignItems: "center",
     },
     h2: {
-      fontSize: 17,
+      fontSize: 13,
       fontWeight: "500",
       color: colorSchema.fonts.h2,
-      marginRight: 20,
+      marginRight: 10,
       marginBottom: 7,
     },
     iconBox: {
@@ -70,33 +74,35 @@ export default function TrackCard({
     },
     subFont: {
       fontSize: 11,
-      color:  colorSchema.fonts.normal,
+      color: colorSchema.fonts.normal,
     },
   });
 
   return (
     <Pressable style={styles.container}>
       <View style={styles.box}>
-        <Text style={styles.h2}>{index + 1}</Text>
+        <Image
+          source={require("../../../assets/books.png")}
+          style={{ width: 50, height: 50 }}
+        />
 
         <View style={styles.boxInfo}>
           <Text style={styles.h2}>{data.Track}</Text>
-          <Text style={styles.subFont}>{data.Artist}</Text>
+        
         </View>
       </View>
       <View style={styles.iconBox}>
-       
         <TouchableOpacity style={styles.player} onPress={() => action(index)}>
           <Feather
             name={!checkPlaying() ? "play-circle" : "pause-circle"}
-            size={26}
+            size={23}
             color="#f8b133"
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.player} onPress={() => action(index)}>
           <Feather
             name={!checkPlaying() ? "book" : "book-open"}
-            size={26}
+            size={23}
             color="#f8b133"
           />
         </TouchableOpacity>

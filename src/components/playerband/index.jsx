@@ -87,18 +87,18 @@ export default function BandPlayer({
     },
 
     avatar: {
-      height: 50,
-      width: 50,
-      borderRadius: 10,
+      height: 55,
+      width: 55,
+      borderRadius: 4,
     },
 
     avatarInfo: {
-      width: "60%",
+      width: "68%",
       overflow: "hidden",
     },
 
     h2: {
-      fontSize: 15,
+      fontSize: 12,
       fontWeight: "800",
       color: color.fonts.white,
     },
@@ -110,7 +110,7 @@ export default function BandPlayer({
 
     playerBox: {
       height: "80%",
-      width: "35%",
+      width: "32%",
       justifyContent: "space-around",
       alignItems: "center",
       flexDirection: "row",

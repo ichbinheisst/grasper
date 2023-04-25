@@ -30,6 +30,7 @@ export default function VideoScreen() {
       alignContent: "center",
       alignItems: "center",
       backgroundColor: "#000",
+      paddingTop:20
     },
     backgroundImage: {
       height: "100%",
@@ -55,7 +56,7 @@ export default function VideoScreen() {
     },
     selectedWordBoxColor: {
       flexDirection: "row",
-      backgroundColor: "#A200E8",
+      backgroundColor: colorSchema.triade.primary,
       borderRadius: 10,
       flexWrap: "wrap",
     },

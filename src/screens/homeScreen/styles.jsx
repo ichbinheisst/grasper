@@ -24,10 +24,10 @@ export const stylesHome = {
   },
 
   bandPlayerBox: {
-    // position: "absolute",
+    //position: "absolute",
     marginVertical: 10,
     marginTop: 0,
-    marginBottom: 20,
+    marginBottom: 0,
 
     alignSelf: "center",
     justifyContent: "center",
@@ -52,7 +52,7 @@ export const stylesHome = {
     color: "#8d8989",
   },
   writerContainer: {
-    //height: 55,
+    height: 50,
     marginLeft: 20,
     marginTop: 0,
     flexDirection: "row",

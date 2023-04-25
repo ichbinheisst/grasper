@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,7 +7,9 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  Button,
 } from "react-native";
+import SquareButton from "../../components/button/squareButton";
 import BandPlayer from "../../components/playerband";
 import TrackCard from "../../components/cards/trackCard";
 import Swipper from "../../components/swipper";
@@ -18,11 +20,45 @@ import OptionBox from "../../components/Options";
 import LoadingScreen from "../loadingScreen";
 import { stylesHome } from "./styles";
 
+import { BarCodeScanner } from "expo-barcode-scanner";
+
 export default function HomeScreen({ navigation }) {
   const body = React.useRef();
   const [showband, setShowBand] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const level = ["Basic", "Intermediate", "Advanced"];
+
+  const [hasPermission, setHasPermission] = useState(null);
+  const [scanned, setScanned] = useState(false);
+  const [openScanner, setOpenScanner] = useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const [permissionResponse, requestPermission] =
+    BarCodeScanner.usePermissions();
+
+  function openScannerQr() {
+    setOpenScanner((previus) => !previus);
+  }
+
+  const getBarCodeScannerPermissions = async () => {
+    const { status } = await BarCodeScanner.requestPermissionsAsync();
+    setHasPermission(status === "granted");
+  };
+  useEffect(() => {
+    if (openScanner) {
+      getBarCodeScannerPermissions();
+    }
+  }, [openScanner]);
+
+  const handleBarCodeScanned = (props) => {
+    let dat = props.data;
+    String(dat);
+    setScanned(true);
+
+    if (dat) {
+      setOpenScanner(() => false);
+    }
+  };
 
   const [showBackgroundPicture, setShowBackgroundPicture] =
     React.useState(false);
@@ -38,10 +74,9 @@ export default function HomeScreen({ navigation }) {
 
   function selectAlbumTransition(index) {
     setShowBackgroundPicture(false);
-    //body.current.scrollToOffset({ animated: true, offset: 130 });
-    setTimeout(() => {
-      setShowBackgroundPicture(true)
-    }, 500);
+    body.current.scrollToOffset({ animated: true, offset: 130 });
+
+    navigation.navigate("album");
 
     selectAlbum(index);
   }
@@ -80,8 +115,7 @@ export default function HomeScreen({ navigation }) {
 
   React.useEffect(() => {
     if (!loading) {
-      selectAlbumTransition(7)
-      setShowBackgroundPicture(true)
+      //selectAlbumTransition(0)
     }
   }, []);
 
@@ -106,32 +140,20 @@ export default function HomeScreen({ navigation }) {
                   color={colorSchema}
                 />
 
-                <Swipper
-                  colorSchema={colorSchema}
-                  data={albuns}
-                  action={selectAlbumTransition}
-                  dark={colorSchema.dark}
-                />
-
                 <View style={styles.writerContainer}>
                   {showBackgroundPicture && (
                     <Writter text={currentAlBum.Artist} color={colorSchema} />
                   )}
                 </View>
-               
               </View>
             }
-            data={currentAlBum.tracks}
+            data={[{ id: "3", language: "German" }]}
             renderItem={({ item, index }) => (
               <View style={styles.trackCardBox}>
-                <TrackCard
+                <Swipper
                   colorSchema={colorSchema}
-                  action={Player}
-                  data={item}
-                  index={index}
-                  state={isPlaying}
-                  trackPlayingInfo={currentAudio}
-                  action2={GoToActivity}
+                  data={albuns}
+                  action={selectAlbumTransition}
                   dark={colorSchema.dark}
                 />
               </View>
@@ -140,18 +162,19 @@ export default function HomeScreen({ navigation }) {
           />
         </>
       )}
-       {showband && (
-                  <View style={styles.bandPlayerBox}>
-                    <BandPlayer
-                      nav={GoToPlayer}
-                      playPause={playPause}
-                      state={isPlaying}
-                      data={currentAudio}
-                      close={closeBand}
-                      color={colorSchema}
-                    />
-                  </View>
-                )}
+
+      {showband && (
+        <View style={styles.bandPlayerBox}>
+          <BandPlayer
+            nav={GoToPlayer}
+            playPause={playPause}
+            state={isPlaying}
+            data={currentAudio}
+            close={closeBand}
+            color={colorSchema}
+          />
+        </View>
+      )}
     </SafeAreaView>
   );
 }

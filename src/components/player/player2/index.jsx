@@ -65,7 +65,7 @@ export default function PlayerB({
       height: 63,
       width: "94%",
       flexDirection: "row",
-      backgroundColor:colorSchema.triade.primary,
+      backgroundColor:colorSchema.triade.thirdary,
       justifyContent: "space-around",
       borderRadius: 10,
       padding: 5,
@@ -172,7 +172,7 @@ export default function PlayerB({
             <AntDesign
               name={!state ? "caretright" : "pause"}
               size={15}
-              color={colorSchema.triade.primary}
+              color={colorSchema.triade.thirdary}
             />
           </Pressable>
         </Animated.View>
